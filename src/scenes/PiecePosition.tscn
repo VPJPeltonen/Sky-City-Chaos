@@ -1,0 +1,21 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://src/scenes/PiecePosition.gd" type="Script" id=1]
+[ext_resource path="res://src/scenes/Block.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/scenes/BlockVar2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/scenes/BlockVar4.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/scenes/BlockVar6.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/scenes/BlockVar1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/scenes/BlockVar3.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/scenes/BlockVar5.tscn" type="PackedScene" id=8]
+
+[node name="PiecePosition" type="Position3D"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 0, 0 )
+script = ExtResource( 1 )
+StraightPiece = ExtResource( 2 )
+blockvar1 = ExtResource( 6 )
+blockvar2 = ExtResource( 3 )
+blockvar3 = ExtResource( 7 )
+blockvar4 = ExtResource( 4 )
+blockvar5 = ExtResource( 8 )
+blockvar6 = ExtResource( 5 )

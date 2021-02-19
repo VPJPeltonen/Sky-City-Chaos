@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/fire_tex1.png" type="Texture" id=1]
+
+[sub_resource type="SpatialMaterial" id=4]
+flags_transparent = true
+albedo_color = Color( 1, 1, 1, 0.607843 )
+albedo_texture = ExtResource( 1 )
+
+[sub_resource type="QuadMesh" id=5]
+material = SubResource( 4 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[node name="YellowFire" type="CPUParticles"]
+transform = Transform( -0.00086833, -0.499997, -2.18556e-08, 0, -2.18557e-08, 0.5, -0.249998, 0.00173666, 7.59118e-11, 3.74611, -0.52832, 1.23456 )
+amount = 32
+lifetime = 0.5
+local_coords = false
+mesh = SubResource( 5 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 108.87
+gravity = Vector3( 0, 0, 0 )
+angular_velocity = 295.19
+scale_amount_curve = SubResource( 3 )
