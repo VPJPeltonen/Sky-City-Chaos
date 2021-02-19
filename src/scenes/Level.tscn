@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/scenes/DefaultTower.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/scripts/Player.gd" type="Script" id=2]
@@ -6,7 +6,7 @@
 [ext_resource path="res://src/scripts/Porter.gd" type="Script" id=4]
 [ext_resource path="res://src/scripts/Pieces.gd" type="Script" id=5]
 [ext_resource path="res://src/scenes/PiecePosition.tscn" type="PackedScene" id=6]
-[ext_resource path="res://assets/tex.png" type="Texture" id=7]
+[ext_resource path="res://src/materials/default.tres" type="Material" id=7]
 [ext_resource path="res://assets/Material.material" type="Material" id=8]
 [ext_resource path="res://src/scenes/YellowFire.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/scenes/RedFire.tscn" type="PackedScene" id=10]
@@ -17,6 +17,7 @@
 [ext_resource path="res://assets/buttonX.png" type="Texture" id=15]
 [ext_resource path="res://assets/button8.png" type="Texture" id=16]
 [ext_resource path="res://assets/buttonP.png" type="Texture" id=17]
+[ext_resource path="res://assets/arrowUp.png" type="Texture" id=18]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Ship"
@@ -33,30 +34,32 @@ surfaces/0 = {
 "vertex_count": 858
 }
 
-[sub_resource type="SpatialMaterial" id=6]
-albedo_texture = ExtResource( 7 )
-metallic = 0.55
-metallic_specular = 1.0
-roughness = 0.23
-
-[sub_resource type="CapsuleShape" id=7]
+[sub_resource type="CapsuleShape" id=2]
 radius = 1.18441
 height = 3.28577
 
-[sub_resource type="BoxShape" id=5]
-extents = Vector3( 3.64138, 17.7539, 49.4468 )
+[sub_resource type="CubeMesh" id=3]
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.305882, 0.305882, 0.305882, 1 )
+
+[sub_resource type="ConvexPolygonShape" id=5]
+points = PoolVector3Array( -1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1, 1, -1, -1, -1, 1, 1, 1, -1, 1, -1, 1, 1, -1, -1, 1, 1, 1, -1, 1, -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, 1, 1, -1, -1, 1, -1, 1, 1, 1, -1, 1, 1, 1, -1, -1, -1, -1, -1, 1, -1, 1, -1, -1 )
+
+[sub_resource type="BoxShape" id=6]
+extents = Vector3( 3.64138, 17.7539, 115.028 )
 
 [node name="Level" type="Spatial"]
 
 [node name="Player" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.13426, 0 )
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 2.13426, 0 )
 script = ExtResource( 2 )
 
 [node name="VisualModel" type="Spatial" parent="Player"]
 
 [node name="Ship" type="MeshInstance" parent="Player/VisualModel"]
 mesh = SubResource( 1 )
-material/0 = SubResource( 6 )
+material/0 = ExtResource( 7 )
 
 [node name="Position3D" type="Position3D" parent="Player/VisualModel"]
 transform = Transform( 1, 3.41743e-10, 6.98492e-10, -7.05427e-11, 1, 2.91038e-10, -3.20142e-10, -3.49246e-10, 1, -5.27046, -0.000242949, 0.000267601 )
@@ -77,7 +80,7 @@ transform = Transform( -0.00086833, -0.499997, -2.18556e-08, 0, -2.18557e-08, 0.
 
 [node name="CollisionShape" type="CollisionShape" parent="Player/PlayerPhysics"]
 transform = Transform( -0.000715776, 0, 1, 0, 1, 0, -1, 0, -0.000715776, 1.29943, 0, 0 )
-shape = SubResource( 7 )
+shape = SubResource( 2 )
 
 [node name="Camera" type="Camera" parent="Player"]
 transform = Transform( -4.37114e-08, -1, 1.19249e-08, 0, 1.19249e-08, 1, -1, 4.37114e-08, -5.21253e-16, 0, 22.5566, 0 )
@@ -131,7 +134,6 @@ margin_bottom = 104.0
 margin_right = 50.0
 margin_bottom = 50.0
 texture = ExtResource( 11 )
-flip_h = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -168,6 +170,30 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="VBoxContainer" type="VBoxContainer" parent="Player/UI"]
+anchor_left = 0.5
+anchor_top = 0.9
+anchor_right = 0.5
+anchor_bottom = 0.9
+margin_left = -25.0
+margin_top = -68.0
+margin_right = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Player/UI/VBoxContainer"]
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 18 )
+
+[node name="Label" type="Label" parent="Player/UI/VBoxContainer"]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 68.0
+text = "SPACE"
+align = 1
+
 [node name="Towers4" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.69171, 0, 0 )
 
@@ -177,38 +203,23 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 28.3332 )
 [node name="DefaultTower2" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.463931, 0, -24.276 )
 
-[node name="DefaultTower3" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.399, 0, -24.276 )
-
 [node name="DefaultTower4" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -37.6052, 0, -24.276 )
 
 [node name="DefaultTower5" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -80, 0, 30.197 )
 
-[node name="DefaultTower15" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -59.9765, 0, 30.197 )
-
 [node name="DefaultTower17" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -80.6549, 0.314911, -25.2498 )
 
-[node name="DefaultTower18" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -60.6314, 0.314911, -25.2498 )
-
 [node name="DefaultTower16" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5634, 0, 30.197 )
-
-[node name="DefaultTower6" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -20.7857, 0, 30.1966 )
-
-[node name="DefaultTower9" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32822, 0, 50.0472 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -40.5634, 12.81, 30.197 )
 
 [node name="DefaultTower10" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32822, 0, -47.0937 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.32822, 19.7132, -57.4418 )
 
 [node name="DefaultTower13" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 11.4945, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 77.6544, 19.221, 69.6228 )
+transform = Transform( 11.4945, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 149.131, 19.221, 69.6228 )
 
 [node name="DefaultTower14" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 11.4945, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, -1100.27, 19.221, 69.6228 )
@@ -219,38 +230,44 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0781826, -0.0781403, -90.731
 [node name="DefaultTower28" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -105.714, -0.0781403, -90.7312 )
 
-[node name="DefaultTower29" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -78.8222, -0.0781403, -90.7312 )
-
 [node name="DefaultTower30" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -78.8222, -0.0781403, -70.5691 )
-
-[node name="DefaultTower31" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -63.7597, -0.0781403, -70.5691 )
-
-[node name="DefaultTower32" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -25.3856, -0.0781403, -71.5572 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -78.8222, -10.746, -70.5691 )
 
 [node name="DefaultTower33" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -45.0438, -0.0781403, -71.5572 )
 
 [node name="DefaultTower34" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -83.7419, -0.0781403, 52.3405 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -83.7419, 13.6211, 68.6514 )
 
 [node name="DefaultTower35" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -56.8503, -0.0781403, 52.3405 )
 
-[node name="DefaultTower36" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -56.8503, -0.0781403, 72.5026 )
-
-[node name="DefaultTower37" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -41.7878, -0.0781403, 72.5026 )
-
-[node name="DefaultTower38" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.41372, -0.0781403, 71.5144 )
-
 [node name="DefaultTower39" parent="Towers4" instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -23.0719, -0.0781403, 71.5144 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -33.7623, -0.0781403, 71.5144 )
+
+[node name="DefaultTower41" type="StaticBody" parent="Towers4"]
+transform = Transform( -1.26378e-05, -15, 0, 19.754, -9.59637e-06, 0, 0, 0, 1, -1149.53, -0.0781403, 95.2552 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Towers4/DefaultTower41"]
+transform = Transform( 6.50858, 4.72937e-11, 0, -5.91172e-12, 89.3095, 0, 0, 0, 6.47876, -3.57169, -76.3373, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Towers4/DefaultTower41"]
+transform = Transform( 6.50858, 0, 0, 0, 89.3095, 0, 0, 0, 6.47876, 0, -76.3374, 0 )
+shape = SubResource( 5 )
+
+[node name="DefaultTower42" type="StaticBody" parent="Towers4"]
+transform = Transform( -1.26378e-05, -15, 0, 19.754, -9.59637e-06, 0, 0, 0, 1, -1149.53, -0.0781403, -106.111 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Towers4/DefaultTower42"]
+transform = Transform( 6.50858, 1.81899e-11, 0, -1.81899e-12, 89.3095, 0, 0, 0, 6.47876, -4.26532, -76.3374, 0 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="CollisionShape" type="CollisionShape" parent="Towers4/DefaultTower42"]
+transform = Transform( 6.50858, 0, 0, 0, 89.3095, 0, 0, 0, 6.47876, 0, -76.3374, 0 )
+shape = SubResource( 5 )
 
 [node name="DefaultTower40" parent="Towers4" instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.07979, -0.0781403, 68.4841 )
@@ -263,7 +280,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1100, 0, 0 )
 script = ExtResource( 4 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Porter"]
-shape = SubResource( 5 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 66.9662, 0, 0 )
+shape = SubResource( 6 )
 
 [node name="Position3D" type="Position3D" parent="Porter"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1161.92, 0, 0 )
@@ -272,7 +290,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1161.92, 0, 0 )
 script = ExtResource( 5 )
 
 [node name="PiecePosition" parent="Pieces" instance=ExtResource( 6 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -100, 0, 0 )
 
 [node name="PiecePosition2" parent="Pieces" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -200, 0, 0 )
@@ -300,5 +317,9 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -900, 0, 0 )
 
 [node name="PiecePosition10" parent="Pieces" instance=ExtResource( 6 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1000, 0, 0 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.796663, -0.40276, 0.45068, -0.00226286, 0.743643, 0.668573, -0.604419, -0.533647, 0.591522, -54.8354, 197.027, 7.32501 )
+light_color = Color( 0.984314, 0.862745, 0.784314, 1 )
 [connection signal="body_entered" from="Porter" to="Porter" method="_on_Porter_body_entered"]
 [connection signal="loop_done" from="Porter" to="Pieces" method="_on_Porter_loop_done"]
