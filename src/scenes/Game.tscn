@@ -3,7 +3,9 @@
 [ext_resource path="res://src/scenes/Level.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/scripts/Main.gd" type="Script" id=2]
 
-[node name="Game" type="Spatial"]
+[node name="Game" type="Spatial" groups=[
+"main",
+]]
 script = ExtResource( 2 )
 level = ExtResource( 1 )
 
@@ -31,4 +33,40 @@ text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GameOver" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -38.0
+margin_top = -20.0
+margin_right = 38.0
+margin_bottom = 20.0
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="GameOver/VBoxContainer"]
+margin_right = 76.0
+margin_bottom = 14.0
+text = "GAME OVER"
+align = 1
+valign = 1
+
+[node name="RestartButton" type="Button" parent="GameOver/VBoxContainer"]
+margin_top = 22.0
+margin_right = 76.0
+margin_bottom = 42.0
+text = "Restart"
 [connection signal="pressed" from="MainMenu/Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="GameOver/VBoxContainer/RestartButton" to="." method="_on_RestartButton_pressed"]

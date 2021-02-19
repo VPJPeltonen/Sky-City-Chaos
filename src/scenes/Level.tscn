@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/scenes/DefaultTower.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/scripts/Player.gd" type="Script" id=2]
@@ -10,6 +10,13 @@
 [ext_resource path="res://assets/Material.material" type="Material" id=8]
 [ext_resource path="res://src/scenes/YellowFire.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/scenes/RedFire.tscn" type="PackedScene" id=10]
+[ext_resource path="res://assets/buttonA.png" type="Texture" id=11]
+[ext_resource path="res://assets/arrowRight.png" type="Texture" id=12]
+[ext_resource path="res://src/scripts/PlayerUI.gd" type="Script" id=13]
+[ext_resource path="res://assets/buttonB.png" type="Texture" id=14]
+[ext_resource path="res://assets/buttonX.png" type="Texture" id=15]
+[ext_resource path="res://assets/button8.png" type="Texture" id=16]
+[ext_resource path="res://assets/buttonP.png" type="Texture" id=17]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Ship"
@@ -74,6 +81,7 @@ shape = SubResource( 7 )
 
 [node name="Camera" type="Camera" parent="Player"]
 transform = Transform( -4.37114e-08, -1, 1.19249e-08, 0, 1.19249e-08, 1, -1, 4.37114e-08, -5.21253e-16, 0, 22.5566, 0 )
+environment = ExtResource( 3 )
 projection = 2
 fov = 60.0
 size = 0.1
@@ -82,9 +90,15 @@ far = 150.0
 [node name="UI" type="Control" parent="Player"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 13 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+button_eight = ExtResource( 16 )
+button_A = ExtResource( 11 )
+button_B = ExtResource( 14 )
+button_P = ExtResource( 17 )
+button_X = ExtResource( 15 )
 
 [node name="ProgressBar" type="ProgressBar" parent="Player/UI"]
 anchor_top = 0.98
@@ -92,6 +106,64 @@ anchor_right = 1.0
 anchor_bottom = 0.98
 margin_top = -14.0
 value = 100.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Player/UI"]
+anchor_left = 0.5
+anchor_top = 0.95
+anchor_right = 0.5
+anchor_bottom = 0.95
+margin_left = -82.0
+margin_top = -104.0
+margin_right = 82.0
+custom_constants/separation = 64
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Left" type="VBoxContainer" parent="Player/UI/HBoxContainer"]
+margin_right = 50.0
+margin_bottom = 104.0
+
+[node name="Button" type="TextureRect" parent="Player/UI/HBoxContainer/Left"]
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 11 )
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect2" type="TextureRect" parent="Player/UI/HBoxContainer/Left"]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 104.0
+texture = ExtResource( 12 )
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Right" type="VBoxContainer" parent="Player/UI/HBoxContainer"]
+margin_left = 114.0
+margin_right = 164.0
+margin_bottom = 104.0
+
+[node name="Button" type="TextureRect" parent="Player/UI/HBoxContainer/Right"]
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect3" type="TextureRect" parent="Player/UI/HBoxContainer/Right"]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 104.0
+texture = ExtResource( 12 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

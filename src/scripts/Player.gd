@@ -26,9 +26,12 @@ func _physics_process(delta):
 	forward_vector = forward_vector*input*move_speed*delta
 	vel = vel+forward_vector
 	vel = phys_body.move_and_slide(vel,Vector3.UP)
-	if vel.length() < 30:
-		bomb_time -= delta*5
+	var mag = vel.length()
+	if mag < 30:
+		bomb_time -= delta*0.5*(30-mag/30)
 		$UI/ProgressBar.value = bomb_time
+		if bomb_time < 0:
+			get_tree().call_group("main", "game_over")
 	visual_mesh.global_transform.origin = phys_body.global_transform.origin
 	camera.global_transform.origin = Vector3(phys_body.global_transform.origin.x-15,phys_body.global_transform.origin.y + 50,phys_body.global_transform.origin.z)
 	if Input.is_action_pressed("turn_left"):
@@ -36,4 +39,8 @@ func _physics_process(delta):
 	if Input.is_action_pressed("turn_right"):
 		visual_mesh.rotate_y(-delta*turn_speed)
 
+func check_left() -> bool:
+	return false
 
+func check_right() -> bool:
+	return false
